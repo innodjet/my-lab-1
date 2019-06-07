@@ -2,7 +2,7 @@
 
 Objective 
 
-Implament a CRUD operation using VueJS 
+CRUD operation using VueJS 
 
 ## Build Setup
 
