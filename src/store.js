@@ -25,7 +25,7 @@ const state = {
   error_message: '',
   data_to_update: '',
   data_to_display:[],
-  uri: 'https://guarded-springs-66217.herokuapp.com/',
+  uri: '',
   home_uri: 'http://localhost:8080/',
   loginUri: 'http://localhost:8080/?#/Login',
   app_users: '',
