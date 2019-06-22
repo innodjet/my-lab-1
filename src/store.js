@@ -179,7 +179,6 @@ const mutations = {
 // actions are functions that causes side effects and can involve
 // asynchronous operations.
 const actions = {
-
   getAppUsersData(context) {
     return new Promise ( (resolve , reject ) => {
       Vue.axios
@@ -220,7 +219,8 @@ const actions = {
     clear();
     if (state.post != '') {
       state.loading_status = true;
-      context.dispatch('updatePostData' , { data: escape(state.post) , id: state.data_to_update.id } ).then( () => {
+      context.dispatch('updatePostData' , { data: escape(state.post) , 
+                                            id: state.data_to_update.id } ).then( () => {
         state.post = '';
         context.dispatch('getPostData');
         state.loading_status = false;
@@ -293,9 +293,9 @@ const actions = {
     .then((res) => {
       state.post_data = res.data;
       // Total number of pages
-      state.total_pages = ((state.post_data.length % 5) == 0) ? 
-                          (state.post_data.length / 5) : 
-                          (parseInt(state.post_data.length / 5)) + 1;
+      state.total_pages = ( (state.post_data.length % 5) == 0) ? 
+                            (state.post_data.length / 5) : 
+                            (parseInt(state.post_data.length / 5)) + 1;
       dataToDisplay(state.page_selected);
     });
   },
