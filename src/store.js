@@ -288,6 +288,7 @@ const actions = {
   },
 
   getPostData(context) {
+    state.loading_status = true;
     Vue.axios
     .get(state.uri+'getPost')
     .then((res) => {
@@ -296,6 +297,7 @@ const actions = {
       state.total_pages = ( (state.post_data.length % 5) == 0) ? 
                             (state.post_data.length / 5) : 
                             (parseInt(state.post_data.length / 5)) + 1;
+      state.loading_status = false;
       dataToDisplay(state.page_selected);
     });
   },
