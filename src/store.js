@@ -25,9 +25,9 @@ const state = {
   error_message: '',
   data_to_update: '',
   data_to_display:[],
-  uri: '',
-  home_uri: 'http://localhost:8080/',
-  loginUri: 'http://localhost:8080/?#/Login',
+  uri: 'https://still-reaches-65516.herokuapp.com/', // API ACCESS URI
+  home_uri: 'https://young-caverns-39863.herokuapp.com/',
+  loginUri: 'https://young-caverns-39863.herokuapp.com/Login',
   app_users: '',
   login: {
     username: '',
@@ -132,10 +132,6 @@ const getCookie = (cname) => {
   return "";
 }
 
-const checkCookie = () => {
-  return getCookie("username");
-}
-
 ////// Home ///////
 const _ = (ol) => {
   return document.getElementById(ol);
@@ -179,15 +175,11 @@ const mutations = {
 // actions are functions that causes side effects and can involve
 // asynchronous operations.
 const actions = {
-  getAppUsersData(context) {
-    return new Promise ( (resolve , reject ) => {
-      Vue.axios
-      .get(state.uri+'getAppUsersData')
-      .then((res) => {
-        state.app_users = res.data;
-        resolve();
-      });
-    });
+
+  async getAppUsersData(context) {
+    const res = await Vue.axios.get(state.uri+'getAppUsersData');
+    state.app_users = await res.data;
+    return Promise.resolve();
   },
 
   post(context) {
@@ -219,8 +211,7 @@ const actions = {
     clear();
     if (state.post != '') {
       state.loading_status = true;
-      context.dispatch('updatePostData' , { data: escape(state.post) , 
-                                            id: state.data_to_update.id } ).then( () => {
+      context.dispatch('updatePostData' , { data: escape(state.post) , id: state.data_to_update.id } ).then( () => {
         state.post = '';
         context.dispatch('getPostData');
         state.loading_status = false;
@@ -287,71 +278,49 @@ const actions = {
     });
   },
 
-  getPostData(context) {
+  async getPostData(context) {
     state.loading_status = true;
-    Vue.axios
-    .get(state.uri+'getPost')
-    .then((res) => {
-      state.post_data = res.data;
-      // Total number of pages
-      state.total_pages = ( (state.post_data.length % 5) == 0) ? 
-                            (state.post_data.length / 5) : 
-                            (parseInt(state.post_data.length / 5)) + 1;
-      state.loading_status = false;
-      dataToDisplay(state.page_selected);
-    });
+    const res = await Vue.axios.get(state.uri+'getPost');
+    const result = res.data;
+    state.post_data = result;
+    // Total number of pages
+    state.total_pages = ((state.post_data.length % 5) == 0) ? 
+                        (state.post_data.length / 5) : 
+                        (parseInt(state.post_data.length / 5)) + 1;
+    dataToDisplay(state.page_selected);
+    state.loading_status = false;
+    return Promise.resolve();
   },
 
-  createPostData(context , data) {
-    return new Promise((resolve , reject) => {
-      Vue.axios
-      .post(state.uri+'createPost', {
-        title: 'test',
-        data : data
-      })
-      .then((res) => {
-        if ( res.data == 'Success') {
-          resolve();
-        } else {
-          reject();
-        }
-      });
-    });
+  async createPostData (context , data) {
+    const res = await Vue.axios.post(state.uri+'createPost', {title: 'test',data : data});
+    const result = await res.data;
+    if ( result == 'Success') 
+      return Promise.resolve()  
+    else 
+      return Promise.reject();
   },
 
-  updatePostData(context , data) {
-    return new Promise((resolve , reject) => {
-      Vue.axios
-      .put(state.uri+'updatePost', {
-        data : data.data,
-        id: data.id
-      })
-      .then((res) => {
-        if ( res.data == 'Success') {
-          resolve();
-        } else {
-          reject();
-        }
-      });
-    });
+  async updatePostData(context , data) {
+    const res =  await Vue.axios.put(state.uri+'updatePost', { data : data.data, id: data.id });
+    const result = await res.data;
+    if ( result == 'Success') 
+      return Promise.resolve()  
+    else 
+      return Promise.reject();
   },
 
-  deletePostData(context , item_id) {
-    return new Promise((resolve , reject) => {
-      Vue.axios
-      .delete( state.uri+'deletePost', { data: { id: item_id } } )
-      .then( (res) => {
-        if ( res.data == 'Success') {
-          resolve();
-        } else {
-          reject();
-        }
-      });
-    });
+  async deletePostData(context , item_id) {
+    const res = await Vue.axios.delete( state.uri+'deletePost', { data: { id: item_id } } );
+    const result = res.data;
+    if ( result == 'Success') 
+      return Promise.resolve()  
+    else 
+      return Promise.reject();
   },
 
   ///////// Login //////////
-  login(context) {
+  async login(context) {
     event.preventDefault();
     if ( state.login.username != ''  && 
          state.login.password != '' ) {
@@ -359,30 +328,25 @@ const actions = {
       // Check if credentials match what we have in the DB
       state.loading_status = true
       // Display error message in case username or password is not Valid
-      Vue.axios
-      .post(state.uri+'login', {
-        data : state.login
-      })
-      .then( (res) => {
-        if ( res.data.length > 0  ) {
-          if ( res.data.length == 1 ) {
-            setCookie("userId", res.data[0].user_id  , 1);
-            setCookie("username", state.login.username , 1);
-            setTimeout( () => { 
-              window.location.href  = state.home_uri;
-            }, 3000);
-          } 
-        } else {
-          state.loading_status = false;
-          state.login.error = 'The username or password is incorrect';
-        }
-      });
+      const res = await Vue.axios.post(state.uri+'login', { data : state.login })
+      const result = await res.data;
+      if ( result.length > 0  ) {
+        if ( res.data.length == 1 ) {
+          setCookie("userId", res.data[0].user_id  , 1);
+          setCookie("username", state.login.username , 1);
+          window.location.href  = state.home_uri;
+        } 
+      } else {
+        state.loading_status = false;
+        state.login.error = 'The username or password is incorrect';
+      }
     } else {
       state.loading_status = false;
       state.login.error = 'Please enter a username and password to Login';
       _('inputUsername').style.border = '1px solid #ba2629'; 
       _('inputPassword').style.border = '1px solid #ba2629'; 
     }
+    return Promise.resolve();
   },
 
   cancelLogin(context) {
@@ -405,7 +369,7 @@ const actions = {
     }
   },
 
-  signUp (context) { 
+  async signUp(context) { 
     event.preventDefault();
     let rep = 0;
     state.loading_status = false;
@@ -446,7 +410,7 @@ const actions = {
     // Next start sign Up step
     if ( rep == 3 ) {
       state.loading_status = true;
-      context.dispatch('getAppUsersData').then( () => {
+      context.dispatch('getAppUsersData').then( async () => {
         let emailExist = 0;
         // Verify if no one register with the email provided 
         for ( let i = 0; i < state.app_users.length; i++ ) {
@@ -478,18 +442,15 @@ const actions = {
         }
         // Finally all checks are done we can safely save the data
         if ( rep == 5 ) {
-          Vue.axios
-          .post(state.uri+'signUp', {
-            data : state.sign_up
-          })
-          .then((res) => {
-            if ( res.data == 'Success') {
-              state.loading_status  = false;
-              state.sign_up.success = 'You successfully sign up to the application.';
-              state.sign_up.redirectMessage = 'Please wait while we are redirecting you to the login page...';
-              timedText();
-            } 
-          });
+          const res = await Vue.axios.post(state.uri+'signUp', { data : state.sign_up });
+          const result = await res.data;
+          if ( result == 'Success') {
+            state.loading_status  = false;
+            state.sign_up.success = 'You successfully sign up to the application.';
+            state.sign_up.redirectMessage = 'Please wait while we are redirecting you to the login page...';
+            timedText();
+          } 
+          return Promise.resolve();
         }
       });
     }
