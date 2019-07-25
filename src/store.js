@@ -25,9 +25,9 @@ const state = {
   error_message: '',
   data_to_update: '',
   data_to_display:[],
-  uri: 'https://still-reaches-65516.herokuapp.com/', // API ACCESS URI
-  home_uri: 'https://young-caverns-39863.herokuapp.com/',
-  loginUri: 'https://young-caverns-39863.herokuapp.com/Login',
+  uri: '', // API ACCESS URI
+  home_uri: '',
+  loginUri: '',
   app_users: '',
   login: {
     username: '',
