@@ -40,7 +40,7 @@
                 <button class="btn btn-outline-danger my-2 my-sm-0" 
                         id="btnLoginCancel" 
                         @click="cancelLogin" 
-                        type="submit">Cancel</button>
+                        type="button">Cancel</button>
                 <button class="btn btn-outline-info my-2 my-sm-0" 
                         id="btnLoginLogin" 
                         @click="login" 
