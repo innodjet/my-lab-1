@@ -4,25 +4,32 @@
     <nav class="navbar navbar-light bg-light" id="nav" >
       <router-link to="/">
         <a class="navbar-brand" href="#">
-          <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" 
+          <!-- <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" 
                width="30" 
                height="30" 
                class="d-inline-block align-top" alt=""
-          >
+          > -->
+          <img src="https://bootdey.com/img/Content/user_1.jpg"
+               width="30" 
+               height="30" 
+               alt=""/>
         </a>
       </router-link>
       <form class="form-inline">
         <router-link to="/Login" v-show="isSessionActive === false">
-          <button class="btn btn-outline-info my-2 my-sm-0" id="btnNavLogin" type="submit">Login</button>
+          <button class="btn btn-outline-info my-2 my-sm-0" id="btnNavLogin" type="submit">
+            <span class="glyphicon glyphicon-log-in"></span> Login</button>
         </router-link>
         <button class="btn btn-outline-success my-2 my-sm-0" 
                 v-show="isSessionActive === true"
                 id="btnNavWelcome" type="submit">Welcome! {{ $store.getters.sessionUsername  }}</button>
         <button class="btn btn-outline-danger my-2 my-sm-0" 
                 v-show="isSessionActive === true"
-                id="btnNavLogout" @click="logout" type="submit">Logout</button>
+                id="btnNavLogout" @click="logout" type="submit">
+                <span class="glyphicon glyphicon-log-out"></span> Logout</button>
         <router-link to="/Signup" v-show="isSessionActive === false" >
-          <button class="btn btn-outline-warning my-2 my-sm-0" id="btnNavSignUp" type="submit">Sign up</button>
+          <button class="btn btn-outline-warning my-2 my-sm-0" id="btnNavSignUp" type="submit">
+            <span class="glyphicon glyphicon-registration-mark"></span> Sign up</button> 
         </router-link>
 
       </form>

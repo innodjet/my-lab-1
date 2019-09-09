@@ -40,11 +40,11 @@
                 <button class="btn btn-outline-danger my-2 my-sm-0" 
                         id="btnLoginCancel" 
                         @click="cancelLogin" 
-                        type="button">Cancel</button>
+                        type="button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
                 <button class="btn btn-outline-info my-2 my-sm-0" 
                         id="btnLoginLogin" 
                         @click="login" 
-                        type="submit">Login</button>
+                        type="submit"><span class="glyphicon glyphicon-log-in"></span> Login</button>
               </div>
           </form>
         </div>

@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import { uri } from './config';
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
@@ -25,9 +26,9 @@ const state = {
   error_message: '',
   data_to_update: '',
   data_to_display:[],
-  uri: '', // API ACCESS URI
-  home_uri: '',
-  loginUri: '',
+  uri: uri.uri, // API ACCESS URI
+  home_uri: uri.home_uri,
+  loginUri: uri.loginUri,
   app_users: '',
   login: {
     username: '',
