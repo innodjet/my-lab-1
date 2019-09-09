@@ -22,7 +22,7 @@
       </div>
   
       <div class="card">
-        <h5 class="card-header">Sign Up</h5>
+        <h5 class="card-header"><i class="fas fa-registered"></i> Sign Up</h5>
         <div class="card-body">
          <form>
             <div class="form-group row">
@@ -98,8 +98,8 @@
             </div>
             </div>
             <div class="form-group row" id="btngrp">
-              <button class="btn btn-outline-danger my-2 my-sm-0" id="btnCancel" @click="signUpCancel" type="submit">Cancel</button>
-              <button class="btn btn-outline-warning my-2 my-sm-0" id="btnSignUp" @click="signUp" type="submit">Sign up</button>
+              <button class="btn btn-outline-danger my-2 my-sm-0" id="btnCancel" @click="signUpCancel" type="submit"><i class="fa fa-window-close"></i> Cancel</button>
+              <button class="btn btn-outline-warning my-2 my-sm-0" id="btnSignUp" @click="signUp" type="submit"><i class="fas fa-registered"></i> Sign up</button>
             </div>
           </form>
         </div>
@@ -133,7 +133,7 @@
   #btnCancel, 
   #btnSignUp {
     margin-left: 10px;
-    width: 100px;
+    width: 101px;
   }
   .card {
     margin-top: 10px;

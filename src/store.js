@@ -45,7 +45,8 @@ const state = {
     error: '',
     success: '',
     redirectMessage: ''
-  }
+  },
+  show_comment: false,
 };
 
 // mutations are operations that actually mutates the state.
@@ -284,6 +285,7 @@ const actions = {
     const res = await Vue.axios.get(state.uri+'getPost');
     const result = res.data;
     state.post_data = result;
+    // console.log(state.post_data);
     // Total number of pages
     state.total_pages = ((state.post_data.length % 5) == 0) ? 
                         (state.post_data.length / 5) : 
@@ -480,7 +482,16 @@ const actions = {
     setCookie("userId", "" , 0);
     setCookie("username", "" , 0);
     window.location.href  = state.home_uri;
-  } 
+  },
+
+  /////// Comment & Like Features /////
+  comment(context , item) {
+    state.show_comment = !state.show_comment;
+  },
+
+  like(context,item){
+    // console.log(item);
+  }
   
 }; 
 

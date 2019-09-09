@@ -4,11 +4,6 @@
     <nav class="navbar navbar-light bg-light" id="nav" >
       <router-link to="/">
         <a class="navbar-brand" href="#">
-          <!-- <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" 
-               width="30" 
-               height="30" 
-               class="d-inline-block align-top" alt=""
-          > -->
           <img src="https://bootdey.com/img/Content/user_1.jpg"
                width="30" 
                height="30" 
@@ -17,8 +12,7 @@
       </router-link>
       <form class="form-inline">
         <router-link to="/Login" v-show="isSessionActive === false">
-          <button class="btn btn-outline-info my-2 my-sm-0" id="btnNavLogin" type="submit">
-            <span class="glyphicon glyphicon-log-in"></span> Login</button>
+          <button class="btn btn-outline-info my-2 my-sm-0" id="btnNavLogin" type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
         </router-link>
         <button class="btn btn-outline-success my-2 my-sm-0" 
                 v-show="isSessionActive === true"
@@ -26,12 +20,11 @@
         <button class="btn btn-outline-danger my-2 my-sm-0" 
                 v-show="isSessionActive === true"
                 id="btnNavLogout" @click="logout" type="submit">
-                <span class="glyphicon glyphicon-log-out"></span> Logout</button>
+                <i class="fas fa-sign-out-alt"></i> Logout</button>
         <router-link to="/Signup" v-show="isSessionActive === false" >
           <button class="btn btn-outline-warning my-2 my-sm-0" id="btnNavSignUp" type="submit">
-            <span class="glyphicon glyphicon-registration-mark"></span> Sign up</button> 
+          <i class="fas fa-registered"></i> Sign up</button> 
         </router-link>
-
       </form>
     </nav>
   </div>
@@ -61,7 +54,7 @@
   #btnNavLogin,
   #btnNavLogout {
     margin-left: 10px;
-    width: 100px;
+    width: 101px;
   }
   .card {
     margin-top: 10px;

@@ -13,8 +13,8 @@
         </div>
     		<div class="card" v-show="isSessionActive === true" >
     		  <div class="card-body" style="padding: 25px;" >
-    		    <h5 class="card-title" v-show= "$store.state.edit_mode === false " > Post</h5>
-            <h5 class="card-title" v-show= "$store.state.edit_mode === true " > Edit post</h5>
+    		    <h5 class="card-title" v-show= "$store.state.edit_mode === false " ><i class="fas fa-edit"></i> Post</h5>
+            <h5 class="card-title" v-show= "$store.state.edit_mode === true " ><i class="fas fa-edit"></i> Edit post</h5>
     		    <div class="form-group row" >
     			    <div class="col-sm-12" >
     			      <textarea type="text" 
@@ -29,24 +29,24 @@
               <div class="col-sm-12" v-show= "$store.state.edit_mode === false " >
                 <div class="button-group" id="post-grp-button">
                     <button type="button" id="del" 
-                            @click="cancel" class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-remove"></span> Cancel </button>
+                            @click="cancel" class="btn btn-default btn-sm"><i class="fa fa-window-close"></i> Cancel </button>
                     <button id="post-btn" 
                             @click="post" 
                             type="button" 
                             v-scroll-to="'#nav'" 
-                            class="btn btn-info btn-sm"><span class="glyphicon glyphicon glyphicon-send"></span>  Post </button>
+                            class="btn btn-info btn-sm"><i class="fas fa-paper-plane"></i> Post </button>
                 </div>
               </div>
               <div class="col-sm-12" v-show= "$store.state.edit_mode === true ">
                   <div class="button-group" id="post-grp-button">
                     <button type="button" id="del" 
                             @click="cancel" 
-                            class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-remove"></span> Cancel </button>
+                            class="btn btn-default btn-sm"><i class="fa fa-window-close"></i> Cancel </button>
                     <button id="edit" 
                             @click="confirmEdit" 
                             type="button" 
                             v-scroll-to="'#nav'" 
-                            class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-edit"></span> Edit </button>
+                            class="btn btn-default btn-sm"><i class="fa fa-window-edit"></i> Edit </button>
                   </div>
               </div>
             </div>
@@ -62,12 +62,12 @@
                   <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
                 </a>
                 <div class="media-body">
+                    <strong class="text-success"> {{ item.username }} </strong>
                     <span class="text-muted pull-right">
                         <small class="text-muted">{{ formatDate(item.date_posted) }}</small>
                     </span>
-                    <strong class="text-success"> {{ item.username }} </strong>
                     <p>
-                        {{ unescapeData(item.post) }}
+                      {{ unescapeData(item.post) }}
                     </p>
                 </div>
               </li>
@@ -76,42 +76,46 @@
             <div class="col-sm-12"  >
               <div class="postBtnGrp" > 
                 <button id="like" 
-                        v-scroll-to="'#nav'" type="button" 
-                        class="btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span> Like (20) </button>
-                <button id="comment" 
-                        v-scroll-to="'#nav'" type="button" 
-                        class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-comment"></span>  Comment (12) </button>
+                        @click="like(item)" 
+                        type="button" 
+                        class="btn btn-default btn-sm"><i class="fa fa-thumbs-up"></i> Like ({{ item.total_like }}) </button>
+                <!-- <button id="comment" 
+                        v-scroll-to="'#nav'" 
+                        type="button" 
+                        @click="comment(item)" 
+                        class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-comment"></span>  Comment (12) </button> -->
                 <button type="button" id="del" 
                         @click="del(item)" 
                         v-show="item.userId == sessionUserId"
-                        class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-trash"></span> Delete </button>
+                        class="btn btn-default btn-sm"><i class="fas fa-trash-alt"></i> Delete </button>
                 <button id="edit" 
                         @click="edit(item)" 
                         v-show="item.userId == sessionUserId"
                         v-scroll-to="'#nav'" type="button" 
-                        class="btn btn-default btn-sm"><span class="glyphicon glyphicon glyphicon-edit"></span> Edit </button>
+                        class="btn btn-default btn-sm"><i class="fas fa-edit"></i> Edit </button>
               </div>
             </div>
           </div>
-          <div class="row bootstrap snippets" id="comment-section">
+          <div class="row bootstrap snippets" id="comment-section" v-show="$store.state.show_comment == true" >
             <div class="col-md-12 col-md-offset-2 col-sm-12" style="padding: 0px;">
                 <div class="comment-wrapper">
                     <div class="panel panel-info">
                         <div class="panel-heading">  </div>
                         <div class="panel-body">
                             <textarea class="form-control" 
-                                      placeholder="write a comment..." rows="3"></textarea>
+                                      placeholder="write a comment..." 
+                                      rows="3"></textarea>
                             <br>
                             <button type="button" 
                                     class="btn btn-info pull-right" 
                                     style="padding: 0px;"
-                                    id="post-btn"><span class="glyphicon glyphicon-send"></span> Post</button>
+                                    id="post-btn"><i class="fa fa-paper-plane"></i> Post</button>
                             <div class="clearfix"></div>
                             <hr>
                             <ul class="media-list" style="margin-left: 20px;">
                                 <li class="media">
                                     <a href="#" class="pull-left">
-                                        <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                                      <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
                                     </a>
                                     <div class="media-body">
                                         <span class="text-muted pull-right">
@@ -119,8 +123,8 @@
                                         </span>
                                         <strong class="text-success">@MartinoMont</strong>
                                         <strong style="float: right;">
-                                          <span class="glyphicon glyphicon-trash" style="margin: 0px 5px;"></span> 
-                                          <span class="glyphicon glyphicon-edit" style="margin: 0px 5px;"></span> 
+                                          <i class="fas fa-trash-alt"></i>
+                                          <i class="fas fa-edit"></i>
                                         </strong>
                                         <p>
                                           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -227,19 +231,20 @@
       'cancel',
       'previous',
       'next',
-      'pageSelected'
+      'pageSelected',
+      'comment',
+      'like'
     ]),
   };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  @import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css");
   #post {
     margin-bottom: 15px;
   }
   #edit {
     border: 1px solid #007bff;
-    width: 50px;
+    width: 80px;
     background-color: #007bff;
     color: #ffff
   }
@@ -257,12 +262,12 @@
   }
   #del{
     border: 1px solid #dc3545;
-    width: 50px;
+    width: 80px;
     background-color: #dc3545;
     color: #ffff
   }
   #post-btn{
-    width: 50px;
+    width: 80px;
   }
   .button-group{
     float: right;
@@ -314,13 +319,13 @@
     font-size: 7px;
   }
   #comment-section {
-      margin: 20px 0px;
+    margin: 20px 0px;
   }
   .img-circle{
-      border-radius: 0%;
-      width: 45%;
+    border-radius: 0%;
+    width: 45%;
   }
   .media-body {
-     margin-left: -40px;
+    margin-left: -40px;
   }
 </style>

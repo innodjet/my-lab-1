@@ -9,12 +9,12 @@
         Please wait...
       </div>
       <div class="card">
-        <h5 class="card-header">Login</h5>
+        <h5 class="card-header"><i class="fas fa-sign-in-alt"></i> Login</h5>
         <div class="card-body">
           <form>
               <div class="form-group row">
                 <label for="inputPassword" class="col-sm-2 col-form-label">
-                <span class="required">*</span> Username</label>
+                <span class="required">*</span><i class="fas fa-user"></i> Username</label>
                 <div class="col-sm-10">
                   <input  type="text" 
                           class="form-control" 
@@ -26,7 +26,7 @@
               </div>
               <div class="form-group row">
               <label for="inputPassword" class="col-sm-2 col-form-label">
-              <span class="required">*</span> Password</label>
+              <span class="required">*</span><i class="fas fa-key"></i>  Password</label>
               <div class="col-sm-10">
                 <input type="password" 
                        class="form-control" 
@@ -40,20 +40,18 @@
                 <button class="btn btn-outline-danger my-2 my-sm-0" 
                         id="btnLoginCancel" 
                         @click="cancelLogin" 
-                        type="button"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                        type="button"><i class="fa fa-window-close"></i> Cancel</button>
                 <button class="btn btn-outline-info my-2 my-sm-0" 
                         id="btnLoginLogin" 
                         @click="login" 
-                        type="submit"><span class="glyphicon glyphicon-log-in"></span> Login</button>
+                        type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
               </div>
           </form>
         </div>
       </div>
-
     </div>
   </div>
 </template>
-
 <script>
   import { mapGetters, mapActions } from 'vuex';
   export default {
