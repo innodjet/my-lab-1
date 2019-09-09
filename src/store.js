@@ -28,7 +28,7 @@ const state = {
   data_to_display:[],
   uri: uri.api_uri,
   home_uri: uri.env_uri,
-  loginUri: uri.env_uri+'/Login',
+  loginUri: uri.env_uri+'Login',
   app_users: '',
   login: {
     username: '',
